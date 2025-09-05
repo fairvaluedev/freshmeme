@@ -176,12 +176,13 @@ export default function EditorPage() {
       if (event.key === 'Delete' || event.key === 'Backspace') {
         if (fabricCanvasRef.current) {
           const activeObject = fabricCanvasRef.current.getActiveObject();
-          
+
           // Check if we're editing text
-          const isEditingText = activeObject && 
-            (activeObject.type === 'i-text' || activeObject.type === 'text') && 
-            activeObject.isEditing;
-          
+          const isEditingText = activeObject &&
+            (activeObject.type === 'i-text' || activeObject.type === 'text') &&
+            'isEditing' in activeObject &&
+            (activeObject as any).isEditing;
+
           // Only delete if we're not editing text
           if (activeObject && !isEditingText) {
             fabricCanvasRef.current.remove(activeObject);
